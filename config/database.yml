@@ -20,8 +20,7 @@ default: &default
 development:
   <<: *default
   host: local-db
-  username: root
-  password: root
+  port: 3306
   database: sample_db
 
 # Warning: The database defined as "test" will be erased and
@@ -30,8 +29,7 @@ development:
 test:
   <<: *default
   host: test-db
-  username: root
-  password: root
+  port: 3306
   database: sample_db
 
 # As with config/credentials.yml, you never want to store sensitive information,
