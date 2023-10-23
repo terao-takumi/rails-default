@@ -1,0 +1,1 @@
+mysql -h localhost -u root -proot < /db/create_db.sql

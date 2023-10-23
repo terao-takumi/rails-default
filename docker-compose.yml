@@ -1,0 +1,36 @@
+services:
+  web:
+    build: .
+    volumes:
+      - .:/my-app-name
+    command: tail -f /dev/null
+    depends_on:
+      - local-db
+      - test-db
+    ports:
+      - "3000:3000"
+
+  local-db:
+    build: ./db/development
+#    platform: linux/x86_64 # Apple Silicon対応
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci # 文字化け対策
+    volumes: # データ永続化のため
+      - local-db-volume:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3306:3306"
+
+  test-db:
+    build: ./db/test
+#    platform: linux/x86_64 # Apple Silicon対応
+    command: mysqld --character-set-server=utf8 --collation-server=utf8_unicode_ci # 文字化け対策
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      TZ: "Asia/Tokyo"
+    ports:
+      - "3307:3307"
+
+volumes:
+  local-db-volume:
